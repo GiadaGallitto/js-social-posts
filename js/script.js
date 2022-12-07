@@ -55,3 +55,41 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+
+let divElement = document.getElementById("container")
+
+
+
+
+
+function createNewPost(infoImage){
+    const post = document.createElement("div");
+    post.classList.add("post");
+
+    const postHeader = document.createElement("div");
+    postHeader.classList.add("post__header");
+
+    const postMeta = document.createElement("div");
+    postMeta.classList.add("post-meta");
+
+    let metaIcon = document.createElement("div");
+    metaIcon.classList.add("post-meta__icon")
+
+    let imgIcon = document.createElement("img");
+    imgIcon.src = infoImage;
+
+    metaIcon.append(imgIcon);
+
+    let metaData = document.createElement("div");
+    metaData.classList.add("post-meta__data");
+
+    let metaAuthor = document.createElement("div");
+    metaAuthor.classList.add("post-meta__author");
+    metaAuthor.innerHTML = infoAuthor
+
+    let metaTime = document.createElement("div");
+    metaTime.classList.add("post-meta__time");
+    metaAuthor.innerHTML = infoAuthor
+
+    metaData.append(metaAuthor, metaTime)
+}
