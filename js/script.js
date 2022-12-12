@@ -56,45 +56,80 @@ const posts = [
     }
 ];
 
-let divElement = document.getElementById("container")
+let divElement = document.getElementById("container");
 
-for (let i = 0; i < posts.length; i++){
-
-    const onePost = posts[i];
-
-    const authorInfos = onePost.author;
+posts.forEach(post =>{
 
     divElement.innerHTML += 
     `        <div class="post">
     <div class="post__header">
         <div class="post-meta">                    
             <div class="post-meta__icon">
-                <img class="profile-pic" src="${authorInfos.image} " alt=" ${authorInfos.name} ">                    
+                <img class="profile-pic" src="${post.author.image} " alt=" ${post.author.name} ">                    
             </div>
             <div class="post-meta__data">
-                <div class="post-meta__author">${authorInfos.name}</div>
-                <div class="post-meta__time">${onePost.created} </div>
+                <div class="post-meta__author">${post.author.name}</div>
+                <div class="post-meta__time">${post.created} </div>
             </div>                    
         </div>
     </div>
-    <div class="post__text">${onePost.content} </div>
+    <div class="post__text">${post.content} </div>
     <div class="post__image">
-        <img src="${onePost.media} " alt="${onePost.media}">
+        <img src="${post.media} " alt="${post.media}">
     </div>
     <div class="post__footer">
         <div class="likes js-likes">
             <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
+                <a class="like-button  js-like-button" href="#" data-postid=" ${post.id} {">
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
             </div>
             <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">${onePost.likes} </b> persone
+                Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes} </b> persone
             </div>
         </div> 
     </div>            
-</div>`
+</div>`;
 
+});
+
+const likeButtons = document.querySelectorAll(`a.like-button`);
+
+const likesCounters = document.querySelectorAll(`b.js-likes-counter`);
+
+const likedPosts = [];
+
+for (let index = 0; index < likeButtons.length; index++) {
+    const likeButton = likeButtons[index];
+    const likesCounter = likesCounters[index];
+
+    const postId = parseInt(likeButton.getAttribute(`data-postid`), 10)
+
+    console.log(likesCounter)
+    
+    likeButton.addEventListener(`click`, function(event){
+        event.preventDefault();
+        // likeButton.classList.toggle(`like-button--liked`);
+
+        if(likeButton.classList.contains(`like-button--liked`)){
+
+            likeButton.classList.remove(`like-button--liked`);
+
+            likesCounter.innerHTML = parseInt(likesCounter.innerHTML, 10) - 1;
+
+            likedPosts.splice(likedPosts.indexOf(postId), 1)
+        } else {
+
+            likeButton.classList.add(`like-button--liked`);
+
+            likesCounter.innerHTML = parseInt(likesCounter.innerHTML, 10) + 1;
+
+            likedPosts.push(likedPosts.indexOf(postId), 1);
+        }
+
+    })
 }
+
+
 
